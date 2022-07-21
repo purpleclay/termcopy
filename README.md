@@ -21,7 +21,7 @@ Use:
 ```go
 package main
 
-import "github.com/purpleclay/clipboard"
+import "github.com/purpleclay/termcopy"
 
 func main() {
     clipboard.CopyString("Hello there!")

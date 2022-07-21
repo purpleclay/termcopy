@@ -46,10 +46,12 @@ func TestSupported_TermEnvNotSet(t *testing.T) {
 
 func setEnv(t *testing.T, key, value string) {
 	t.Helper()
+
+	curEnv := os.Getenv(key)
 	os.Setenv(key, value)
 
 	t.Cleanup(func() {
-		os.Unsetenv(key)
+		os.Setenv(key, curEnv)
 	})
 }
 

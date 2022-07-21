@@ -35,14 +35,15 @@ const (
 	termEnv = "TERM"
 	xterm   = "xterm"
 
-	// OCS52 supports copying a maximum of 100000 bytes to the system clipboard
-	maxBuffer = 100000
+	// OSC52 supports copying a maximum of 100000 bytes to the system clipboard
+	maxBuffer  = 100000
+	truncateAt = 99992
 )
 
-//
 var out = os.Stdout
 
-// Supported ...
+// Supported identifies whether the current terminal supports copying
+// to the system clipboard.
 func Supported() bool {
 	var termType string
 	if termType = os.Getenv(termEnv); termType == "" {
@@ -52,36 +53,55 @@ func Supported() bool {
 	return strings.HasPrefix(termType, xterm)
 }
 
-// Copy ...
+// Copy the contents of the reader to the system clipboard. If the current
+// terminal is not supported the operating system code (OSC) will be
+// ignored and the existing system clipboard will remain unmodified.
+//
+// There is an imposed limit of 100kb that can be written to the system
+// clipboard using OSC52. This translates to a truncation of 99992 bytes
+// worth of data that will be copied to the system clipboard
 func Copy(in io.Reader) {
 	buf := bufio.NewWriterSize(out, maxBuffer)
 	fmt.Fprint(buf, "\033]52;c;")
 
 	enc := base64.NewEncoder(base64.StdEncoding, buf)
-	io.Copy(enc, io.LimitReader(in, 99992))
+	io.Copy(enc, io.LimitReader(in, truncateAt))
 	enc.Close()
 	fmt.Fprint(buf, "\a")
 
-	// Flush buffer to terminal
 	buf.Flush()
 }
 
-// CopyBytes ...
+// CopyBytes copies the contents of a byte array to the system clipboard.
+// If the current terminal is not supported the operating system code (OSC)
+// will be ignored and the existing system clipboard will remain unmodified.
+//
+// There is an imposed limit of 100kb that can be written to the system
+// clipboard using OSC52. This translates to a truncation of 99992 bytes
+// worth of data that will be copied to the system clipboard
 func CopyBytes(in []byte) {
-	// TODO: identify the length, and truncate to the limit as needed
+	max := truncateAt
+	if max > len(in) {
+		max = len(in)
+	}
 
-	b64 := base64.StdEncoding.EncodeToString(in)
+	b64 := base64.StdEncoding.EncodeToString(in[:max])
 
 	buf := bufio.NewWriterSize(out, maxBuffer)
 	fmt.Fprint(buf, "\033]52;c;")
 	fmt.Fprint(buf, b64)
 	fmt.Fprint(buf, "\a")
 
-	// Flush buffer to terminal
 	buf.Flush()
 }
 
-// CopyString ...
+// CopyString copies the contents of a string to the system clipboard.
+// If the current terminal is not supported the operating system code (OSC)
+// will be ignored and the existing system clipboard will remain unmodified.
+//
+// There is an imposed limit of 100kb that can be written to the system
+// clipboard using OSC52. This translates to a truncation of 99992 bytes
+// worth of data that will be copied to the system clipboard
 func CopyString(in string) {
 	CopyBytes([]byte(in))
 }

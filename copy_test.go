@@ -38,6 +38,12 @@ func TestSupported(t *testing.T) {
 	assert.True(t, Supported())
 }
 
+func TestSupported_TermEnvNotSet(t *testing.T) {
+	setEnv(t, termEnv, "")
+
+	assert.False(t, Supported())
+}
+
 func setEnv(t *testing.T, key, value string) {
 	t.Helper()
 	os.Setenv(key, value)

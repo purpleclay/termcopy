@@ -36,3 +36,19 @@ func main() {
     termcopy.Bytes([]byte("Hello there!!"))
 }
 ```
+
+## Compatibility
+
+A list of all terminal emulators `termcopy` has been tested against. Both local copying and copying over SSH have been tested.
+
+| Emulator         | Local Copying | SSH Copying |
+| ---------------- | :-----------: | :---------: |
+| iTerm2           |      ✅       |     ✅      |
+| Terminal.app     |      ❌       |     ❌      |
+| Alacritty        |      ✅       |     ✅      |
+| kitty            |      ✅       |     ✅      |
+| tmux             |      ❌       |     ❌      |
+| wez              |               |             |
+| st               |               |             |
+| Windows Terminal |               |             |
+| Tabby            |               |             |

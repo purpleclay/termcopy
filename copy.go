@@ -32,17 +32,27 @@ import (
 )
 
 const (
-	termEnv = "TERM"
-	xterm   = "xterm"
+	termEnv        = "TERM"
+	termProgramEnv = "TERM_PROGRAM"
+	tmuxEnv        = "TMUX"
+	xterm          = "xterm"
 )
 
-var out = os.Stdout
-
 // Supported identifies whether the current terminal supports copying
-// to the system clipboard.
+// to the system clipboard
 func Supported() bool {
 	var termType string
 	if termType = os.Getenv(termEnv); termType == "" {
+		return false
+	}
+
+	// TMUX isn't supported
+	if tmuxTerm := os.Getenv(tmuxEnv); tmuxTerm != "" {
+		return false
+	}
+
+	// Terminal.app isn't supported
+	if termProg := os.Getenv(termProgramEnv); termProg == "Apple_Terminal" {
 		return false
 	}
 
@@ -53,7 +63,7 @@ func Supported() bool {
 // terminal is not supported the operating system code (OSC) will be
 // ignored and the existing system clipboard will remain unmodified
 func Stream(in io.Reader) {
-	buf := bufio.NewWriter(out)
+	buf := bufio.NewWriter(os.Stdout)
 	fmt.Fprint(buf, "\033]52;c;")
 
 	enc := base64.NewEncoder(base64.StdEncoding, buf)
@@ -70,7 +80,7 @@ func Stream(in io.Reader) {
 func Bytes(in []byte) {
 	b64 := base64.StdEncoding.EncodeToString(in)
 
-	buf := bufio.NewWriter(out)
+	buf := bufio.NewWriter(os.Stdout)
 	fmt.Fprint(buf, "\033]52;c;")
 	fmt.Fprint(buf, b64)
 	fmt.Fprint(buf, "\a")

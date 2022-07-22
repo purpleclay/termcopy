@@ -41,14 +41,12 @@ func main() {
 
 A list of all terminal emulators `termcopy` has been tested against. Both local copying and copying over SSH have been tested.
 
-| Emulator         | Local Copying | SSH Copying |
-| ---------------- | :-----------: | :---------: |
-| iTerm2           |      ✅       |     ✅      |
-| Terminal.app     |      ❌       |     ❌      |
-| Alacritty        |      ✅       |     ✅      |
-| kitty            |      ✅       |     ✅      |
-| tmux             |      ❌       |     ❌      |
-| wez              |               |             |
-| st               |               |             |
-| Windows Terminal |               |             |
-| Tabby            |               |             |
+| Emulator                                   | Local Copying | SSH Copying |
+| ------------------------------------------ | :-----------: | :---------: |
+| [Alacritty](https://alacritty.org/)        |      ✅       |     ✅      |
+| [iTerm2](https://iterm2.com/)              |      ✅       |     ✅      |
+| [kitty](https://sw.kovidgoyal.net/kitty/)  |      ✅       |     ✅      |
+| [Tabby](https://tabby.sh/)                 |      ✅       |     ✅      |
+| Terminal.app                               |      ❌       |     ❌      |
+| [tmux](https://github.com/tmux/tmux/wiki)  |      ❌       |     ❌      |
+| [WezTerm](https://wezfurlong.org/wezterm/) |      ✅       |     ✅      |

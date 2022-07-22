@@ -20,7 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package clipboard
+package termcopy
 
 import (
 	"bufio"
@@ -49,10 +49,10 @@ func Supported() bool {
 	return strings.HasPrefix(termType, xterm)
 }
 
-// Copy the contents of the reader to the system clipboard. If the current
+// Stream the contents of the reader to the system clipboard. If the current
 // terminal is not supported the operating system code (OSC) will be
 // ignored and the existing system clipboard will remain unmodified
-func Copy(in io.Reader) {
+func Stream(in io.Reader) {
 	buf := bufio.NewWriter(out)
 	fmt.Fprint(buf, "\033]52;c;")
 
@@ -64,10 +64,10 @@ func Copy(in io.Reader) {
 	buf.Flush()
 }
 
-// CopyBytes copies the contents of a byte array to the system clipboard.
-// If the current terminal is not supported the operating system code (OSC)
-// will be ignored and the existing system clipboard will remain unmodified
-func CopyBytes(in []byte) {
+// Bytes copies the contents of a byte array to the system clipboard. If the
+// current terminal is not supported the operating system code (OSC) will be
+// ignored and the existing system clipboard will remain unmodified
+func Bytes(in []byte) {
 	b64 := base64.StdEncoding.EncodeToString(in)
 
 	buf := bufio.NewWriter(out)
@@ -78,9 +78,9 @@ func CopyBytes(in []byte) {
 	buf.Flush()
 }
 
-// CopyString copies the contents of a string to the system clipboard.
-// If the current terminal is not supported the operating system code (OSC)
-// will be ignored and the existing system clipboard will remain unmodified
-func CopyString(in string) {
-	CopyBytes([]byte(in))
+// String copies the contents of a string to the system clipboard. If the
+// current terminal is not supported the operating system code (OSC) will
+// be ignored and the existing system clipboard will remain unmodified
+func String(in string) {
+	Bytes([]byte(in))
 }

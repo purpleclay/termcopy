@@ -20,8 +20,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-// Package clipboard provides a tiny library for copying to the system clipboard
+// Package termcopy provides a tiny library for copying to the system clipboard
 // through a terminal interface. Copying to the system clipboard is supported
 // using the OSC52 escape sequence. Not all terminals support this standard,
 // and for those that don't, any attempts to copy will silently be ignored
-package clipboard
+package termcopy

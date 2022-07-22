@@ -21,9 +21,11 @@ Use:
 ```go
 package main
 
-import "github.com/purpleclay/termcopy"
+import (
+    "github.com/purpleclay/termcopy"
+)
 
 func main() {
-    clipboard.CopyString("Hello there!")
+    termcopy.String("Hello there!!")
 }
 ```

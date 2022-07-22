@@ -20,7 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package clipboard
+package termcopy
 
 import (
 	"io/ioutil"
@@ -55,10 +55,10 @@ func setEnv(t *testing.T, key, value string) {
 	})
 }
 
-func TestCopy(t *testing.T) {
+func TestStream(t *testing.T) {
 	out = tempFile(t)
 
-	Copy(strings.NewReader("this is a test"))
+	Stream(strings.NewReader("this is a test"))
 
 	cb, err := ioutil.ReadFile(out.Name())
 	require.NoError(t, err)
@@ -66,10 +66,10 @@ func TestCopy(t *testing.T) {
 	assert.Equal(t, "\033]52;c;dGhpcyBpcyBhIHRlc3Q=\a", string(cb))
 }
 
-func TestCopyBytes(t *testing.T) {
+func TestBytes(t *testing.T) {
 	out = tempFile(t)
 
-	CopyBytes([]byte("this is a test"))
+	Bytes([]byte("this is a test"))
 
 	cb, err := ioutil.ReadFile(out.Name())
 	require.NoError(t, err)
@@ -77,10 +77,10 @@ func TestCopyBytes(t *testing.T) {
 	assert.Equal(t, "\033]52;c;dGhpcyBpcyBhIHRlc3Q=\a", string(cb))
 }
 
-func TestCopyString(t *testing.T) {
+func TestString(t *testing.T) {
 	out = tempFile(t)
 
-	CopyString("this is a test")
+	String("this is a test")
 
 	cb, err := ioutil.ReadFile(out.Name())
 	require.NoError(t, err)

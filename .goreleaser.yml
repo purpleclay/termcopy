@@ -47,7 +47,7 @@ changelog:
 
 release:
   footer: |
-    **Full Changelog**: https://github.com/purpleclay/testcontainers-aemm/compare/{{ .PreviousTag }}...{{ .Tag }}
+    **Full Changelog**: https://github.com/purpleclay/termcopy/compare/{{ .PreviousTag }}...{{ .Tag }}
 
     ## What to do next?
 

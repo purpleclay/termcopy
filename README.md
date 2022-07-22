@@ -26,6 +26,13 @@ import (
 )
 
 func main() {
+    // Copy a stream straight to the terminal clipboard
+    termcopy.Stream(os.Stdin)
+
+    // Copy a string to the terminal clipboard
     termcopy.String("Hello there!!")
+
+    // Copy a series of bytes to the terminal clipboard
+    termcopy.Bytes([]byte("Hello there!!"))
 }
 ```
